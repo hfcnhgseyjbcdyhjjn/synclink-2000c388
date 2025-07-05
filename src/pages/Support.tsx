@@ -26,61 +26,17 @@ const Support = () => {
 
   const onSubmit = async (data: SupportFormData) => {
     setIsSubmitting(true);
-    console.log('Submitting support request:', data);
+    console.log('Support request submitted:', data);
 
-    try {
-      const webhookUrl = 'https://discord.com/api/webhooks/1384650136503844874/-70r5MQLYkTuus3vwuPerdRPUSZ9TiMNtqgQIVGNBcJCiocgeFt-nhBUkjdf4mseIb8s';
-      
-      const embed = {
-        title: "🎫 New Support Request",
-        color: 0x00d9ff,
-        fields: [
-          {
-            name: "👤 Username",
-            value: data.username,
-            inline: true
-          },
-          {
-            name: "❓ Problem Description",
-            value: data.problem,
-            inline: false
-          }
-        ],
-        timestamp: new Date().toISOString(),
-        footer: {
-          text: "RosterFlow Support"
-        }
-      };
-
-      const response = await fetch(webhookUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          embeds: [embed]
-        }),
-      });
-
-      if (response.ok) {
-        toast({
-          title: "Support Request Sent",
-          description: "Your support request has been successfully submitted. We'll get back to you soon!",
-        });
-        form.reset();
-      } else {
-        throw new Error('Failed to send support request');
-      }
-    } catch (error) {
-      console.error('Error sending support request:', error);
+    // Simulate form submission without webhook
+    setTimeout(() => {
       toast({
-        title: "Error",
-        description: "Failed to send support request. Please try again.",
-        variant: "destructive",
+        title: "Support Request Received",
+        description: "Your support request has been recorded. Please join our Discord server for assistance.",
       });
-    } finally {
+      form.reset();
       setIsSubmitting(false);
-    }
+    }, 1000);
   };
 
   return (
@@ -91,7 +47,7 @@ const Support = () => {
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-white mb-4">Support Center</h1>
             <p className="text-slate-300 text-lg">
-              Need help? Submit a support request and our team will assist you.
+              Need help? Submit a support request and join our Discord server for assistance.
             </p>
           </div>
 
@@ -151,10 +107,24 @@ const Support = () => {
                     disabled={isSubmitting}
                     className="w-full bg-cyan-600 hover:bg-cyan-700 text-white"
                   >
-                    {isSubmitting ? 'Sending...' : 'Submit Support Request'}
+                    {isSubmitting ? 'Submitting...' : 'Submit Support Request'}
                   </Button>
                 </form>
               </Form>
+
+              <div className="mt-6 p-4 bg-slate-700/50 rounded-lg">
+                <p className="text-slate-300 text-sm text-center">
+                  For immediate support, join our Discord server: 
+                  <a 
+                    href="https://discord.gg/rosterflow" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-cyan-400 hover:text-cyan-300 ml-1 underline"
+                  >
+                    discord.gg/rosterflow
+                  </a>
+                </p>
+              </div>
             </CardContent>
           </Card>
         </div>
